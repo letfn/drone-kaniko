@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+function main {
+  set -exfu
+
+  env | egrep '^(PLUGIN|DRONE|CI)_' | sort
+
+  exec "$@"
+}
+
+main "$@"

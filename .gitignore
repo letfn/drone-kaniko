@@ -1,0 +1,10 @@
+# Secrets
+.drone.secret
+.drone.env
+.env
+.drone.yml.test
+
+# Hugo
+/config.yaml
+gh-pages
+public

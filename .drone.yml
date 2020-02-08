@@ -1,0 +1,79 @@
+---
+kind: pipeline
+type: docker
+name: build
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: everything
+  image: defn/drone-kaniko
+  settings:
+    cache: true
+    password:
+      from_secret: docker_password
+    repo: defn/container
+    skip_tls_verify: true
+    tags: latest
+    username:
+      from_secret: docker_username
+
+---
+kind: pipeline
+type: docker
+name: fmt
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: everything
+  image: defn/container
+  commands:
+  - drone fmt --save
+  - drone fmt --save .drone.yml.test.template
+
+---
+kind: pipeline
+type: docker
+name: lint
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: everything
+  image: defn/container
+  commands:
+  - drone lint --trusted
+  - drone lint .drone.yml.test.template --trusted
+
+---
+kind: pipeline
+type: docker
+name: docs
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: local
+  image: defn/container
+  commands:
+  - cp config.yaml.template config.yaml
+  - hugo
+  - rm -f config.yaml
+
+- name: gh-pages
+  image: defn/container
+  commands:
+  - "(cat config.yaml.template; echo; echo uglyurls: false; echo publishDir: gh-pages) > config.yaml"
+  - hugo
+  - rm -f config.yaml
+
+...
