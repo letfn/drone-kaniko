@@ -1,11 +1,39 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 function main {
-  set -exfu
+  set -eu
 
-  env | egrep '^(PLUGIN|DRONE|CI)_' | sort
+  mv /bin/* /kaniko/
+  rmdir /bin
 
-  exec "$@"
+  set -f
+
+  registry="${PLUGIN_REGISTRY:-index.docker.io}"
+
+  auth="$(echo -n "${PLUGIN_USERNAME}:${PLUGIN_PASSWORD}" | base64 | tr -d "\n")"
+  mkdir -p /kaniko/.docker
+  cat > /kaniko/.docker/config.json <<EOF
+{
+  "auths": {
+    "${registry}": {
+      "auth": "${auth}"
+    },
+    "https://${registry}/v1/": {
+      "auth": "${auth}"
+    }
+  }
+}
+EOF
+
+  set -x
+
+  exec /kaniko/executor \
+    --reproducible \
+    --cache=true \
+    --context=${PLUGIN_CONTEXT:-${PWD}} \
+    --dockerfile=${PLUGIN_DOCKERFILE:-Dockerfile} \
+    --cache-repo=${registry}/${PLUGIN_CACHE_REPO} \
+    --destination=${registry}/${PLUGIN_REPO}:${PLUGIN_TAG} ${PLUGIN_ARGS:-}
 }
 
 main "$@"

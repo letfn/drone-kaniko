@@ -1,7 +1,7 @@
 ---
 kind: pipeline
 type: docker
-name: build
+name: build-a
 
 platform:
   os: linux
@@ -9,16 +9,17 @@ platform:
 
 steps:
 - name: everything
-  image: defn/drone-kaniko
+  image: letfn/drone-kaniko
   settings:
     cache: true
     password:
       from_secret: docker_password
-    repo: defn/container
+    cache_repo: letfn/cache
+    repo: letfn/drone-kaniko
     skip_tls_verify: true
-    tags: latest
     username:
       from_secret: docker_username
+    tag: a
 
 ---
 kind: pipeline
@@ -31,10 +32,10 @@ platform:
 
 steps:
 - name: everything
-  image: defn/container
+  image: letfn/container
   commands:
   - drone fmt --save
-  - drone fmt --save .drone.yml.test.template
+  - drone fmt --save .drone.yml.build
 
 ---
 kind: pipeline
@@ -47,10 +48,10 @@ platform:
 
 steps:
 - name: everything
-  image: defn/container
+  image: letfn/container
   commands:
   - drone lint --trusted
-  - drone lint .drone.yml.test.template --trusted
+  - drone lint .drone.yml.build
 
 ---
 kind: pipeline
@@ -63,14 +64,14 @@ platform:
 
 steps:
 - name: local
-  image: defn/container
+  image: letfn/drone-hugo
   commands:
   - cp config.yaml.template config.yaml
   - hugo
   - rm -f config.yaml
 
 - name: gh-pages
-  image: defn/container
+  image: letfn/drone-hugo
   commands:
   - "(cat config.yaml.template; echo; echo uglyurls: false; echo publishDir: gh-pages) > config.yaml"
   - hugo

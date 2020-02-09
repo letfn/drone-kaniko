@@ -1,30 +1,20 @@
-FROM ubuntu:bionic
+FROM amd64/busybox:musl as busybox
+
+FROM letfn/container as letfn
+
+RUN curl -sSL -o /usr/local/bin/kaniko https://github.com/recur/kaniko/releases/download/v0.17.1-defn/executor-linux-amd64-v0.17.1-defn && chmod 755 /usr/local/bin/kaniko
+
+FROM gcr.io/kaniko-project/executor:debug-v0.17.1
+
+COPY --from=busybox /bin/busybox /bin/sh
+COPY --from=busybox /bin/busybox /bin/busybox
+COPY --from=letfn /usr/local/bin/kaniko /bin/executor
+
+ENV PATH /bin:/kaniko
+
+RUN /bin/busybox --install /bin
 
 WORKDIR /drone/src
-
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y figlet rsync curl make git
-
-RUN curl -sSL -O https://github.com/drone/drone-cli/releases/download/v1.2.1/drone_linux_amd64.tar.gz \
-  && tar xvfz drone_linux_amd64.tar.gz \
-  && rm -f drone_linux_amd64.tar.gz \
-  && chmod 755 drone \
-  && mv drone /usr/local/bin/
-
-RUN curl -sSL -O https://github.com/gohugoio/hugo/releases/download/v0.64.0/hugo_0.64.0_Linux-64bit.tar.gz \
-  && tar xvfz hugo_0.64.0_Linux-64bit.tar.gz hugo \
-  && rm -f hugo_0.64.0_Linux-64bit.tar.gz \
-  && chmod 755 hugo \
-  && mv hugo /usr/local/bin/
-
-RUN mkdir -p /drone/themes && git clone https://github.com/defn/drone-hugo-theme /drone/themes/drone-hugo-theme
-
-RUN curl -sSL -O https://github.com/github/hub/releases/download/v2.14.1/hub-linux-amd64-2.14.1.tgz \
-  && tar xfz hub-linux-amd64-2.14.1.tgz \
-  && rm -f hub-linux-amd64-2.14.1.tgz \
-  && chmod 755 hub-linux-amd64-2.14.1/bin/hub \
-  && mv hub-linux-amd64-2.14.1/bin/hub /usr/local/bin/ \
-  && rm -rf hub-linux-amd64-2.14.1
 
 COPY plugin /plugin
 

@@ -18,8 +18,7 @@ lint: # Run drone lint
 
 test: # Run tests
 	@echo
-	cat .drone.yml.test.template | sed 's#$${PROJECT_PATH}#'"$(PWD)"'#' > .drone.yml.test
-	drone exec --pipeline $@ --trusted .drone.yml.test
+	drone exec --pipeline $@
 
 docs: # Build docs with hugo
 	@echo
@@ -27,7 +26,21 @@ docs: # Build docs with hugo
 
 build: # Build defn/container
 	@echo
-	drone exec --pipeline $@ --secret-file .drone.secret
+	drone exec --pipeline build-a --secret-file .drone.secret
+	sleep 5
+	docker pull letfn/drone-kaniko:a
+	@echo
+	drone exec --pipeline build-b --secret-file .drone.secret .drone.yml.build
+	sleep 5
+	docker pull letfn/drone-kaniko:b
+	@echo
+	drone exec --pipeline build-c --secret-file .drone.secret .drone.yml.build
+	sleep 5
+	docker pull letfn/drone-kaniko:c
+	@echo
+	drone exec --pipeline build --secret-file .drone.secret .drone.yml.build
+	sleep 5
+	docker pull letfn/drone-kaniko
 
 pull:
 	docker pull defn/container
