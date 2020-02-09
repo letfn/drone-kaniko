@@ -1,5 +1,10 @@
 SHELL := /bin/bash
 
+ifeq (shell,$(firstword $(MAKECMDGOALS)))
+NAME := $(strip $(wordlist 2,2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS)))
+$(eval $(NAME):;@:)
+endif
+
 menu:
 	@perl -ne 'printf("%10s: %s\n","$$1","$$2") if m{^([\w+-]+):[^#]+#\s(.+)$$}' Makefile | sort -b
 
@@ -41,6 +46,9 @@ build: # Build defn/container
 	drone exec --pipeline build --secret-file .drone.secret .drone.yml.build
 	sleep 5
 	docker pull letfn/drone-kaniko
+
+shell: # Get a shell
+	docker run --rm -ti -v $(PWD):/drone/src --entrypoint bash $(NAME)
 
 pull:
 	docker pull defn/container

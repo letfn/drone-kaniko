@@ -50,7 +50,7 @@ steps:
 - name: everything
   image: letfn/container
   commands:
-  - drone lint --trusted
+  - drone lint
   - drone lint .drone.yml.build
 
 ---
@@ -65,16 +65,9 @@ platform:
 steps:
 - name: local
   image: letfn/drone-hugo
-  commands:
-  - cp config.yaml.template config.yaml
-  - hugo
-  - rm -f config.yaml
 
 - name: gh-pages
   image: letfn/drone-hugo
-  commands:
-  - "(cat config.yaml.template; echo; echo uglyurls: false; echo publishDir: gh-pages) > config.yaml"
-  - hugo
-  - rm -f config.yaml
+  github_pages: yes
 
 ...
