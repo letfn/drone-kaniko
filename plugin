@@ -27,13 +27,15 @@ EOF
 
   set -x
 
-  exec /kaniko/executor \
+  /kaniko/executor \
     --reproducible \
     --cache=true \
     --context=${PLUGIN_CONTEXT:-${PWD}} \
     --dockerfile=${PLUGIN_DOCKERFILE:-Dockerfile} \
     --cache-repo=${registry}/${PLUGIN_CACHE_REPO} \
     --destination=${registry}/${PLUGIN_REPO}:${PLUGIN_TAG} ${PLUGIN_ARGS:-}
+
+  echo "done"
 }
 
 main "$@"
