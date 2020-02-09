@@ -67,4 +67,27 @@ steps:
       from_secret: docker_username
     tag: latest
 
+---
+kind: pipeline
+type: docker
+name: build-fast
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: everything
+  image: letfn/drone-kaniko:a
+  settings:
+    cache: true
+    password:
+      from_secret: docker_password
+    cache_repo: letfn/cache
+    repo: letfn/drone-kaniko
+    skip_tls_verify: true
+    username:
+      from_secret: docker_username
+    tag: latest
+
 ...

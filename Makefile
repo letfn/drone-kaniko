@@ -42,3 +42,9 @@ build: # Build container
 	drone exec --pipeline build --secret-file .drone.secret .drone.yml.build
 	sleep 5
 	docker pull letfn/drone-kaniko
+
+build-fast: # Build container direcly
+	@echo
+	drone exec --pipeline build-fast --secret-file .drone.secret .drone.yml.build
+	sleep 5
+	docker pull letfn/drone-kaniko
