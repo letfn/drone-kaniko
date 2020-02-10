@@ -11,7 +11,7 @@ steps:
 - name: everything
   image: letfn/drone-kaniko
   settings:
-    args: --single-snapshot
+    args: --single-snapshot --destination=letfn/drone-kaniko
     cache: true
     cache_repo: letfn/cache
     password:
