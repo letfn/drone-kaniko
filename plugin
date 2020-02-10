@@ -28,7 +28,6 @@ EOF
   set -x
 
   /kaniko/executor \
-    -v debug \
     --reproducible \
     --cache=true \
     --context=${PLUGIN_CONTEXT:-${PWD}} \
