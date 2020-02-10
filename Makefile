@@ -27,24 +27,5 @@ docs: # Build docs
 
 build: # Build container
 	@echo
-	drone exec --pipeline build-a --secret-file .drone.secret
-	sleep 5
-	docker pull letfn/drone-kaniko:a
-	@echo
-	drone exec --pipeline build-b --secret-file .drone.secret .drone.yml.build
-	sleep 5
-	docker pull letfn/drone-kaniko:b
-	@echo
-	drone exec --pipeline build-c --secret-file .drone.secret .drone.yml.build
-	sleep 5
-	docker pull letfn/drone-kaniko:c
-	@echo
-	drone exec --pipeline build --secret-file .drone.secret .drone.yml.build
-	sleep 5
-	docker pull letfn/drone-kaniko
-
-build-fast: # Build container direcly
-	@echo
-	drone exec --pipeline build-fast --secret-file .drone.secret .drone.yml.build
-	sleep 5
+	drone exec --pipeline build --secret-file .drone.secret
 	docker pull letfn/drone-kaniko
