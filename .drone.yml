@@ -70,6 +70,6 @@ steps:
 - name: gh-pages
   image: letfn/drone-hugo
   settings:
-    github_page: true
+    github_pages: true
 
 ...
