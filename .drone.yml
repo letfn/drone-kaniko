@@ -11,15 +11,16 @@ steps:
 - name: everything
   image: letfn/drone-kaniko
   settings:
+    args: --single-snapshot
     cache: true
+    cache_repo: letfn/cache
     password:
       from_secret: docker_password
-    cache_repo: letfn/cache
     repo: letfn/drone-kaniko
     skip_tls_verify: true
+    tag: latest
     username:
       from_secret: docker_username
-    tag: latest
 
 ---
 kind: pipeline
@@ -68,6 +69,7 @@ steps:
 
 - name: gh-pages
   image: letfn/drone-hugo
-  github_pages: yes
+  settings:
+    github_page: true
 
 ...

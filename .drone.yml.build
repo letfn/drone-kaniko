@@ -12,14 +12,14 @@ steps:
   image: letfn/drone-kaniko:a
   settings:
     cache: true
+    cache_repo: letfn/cache
     password:
       from_secret: docker_password
-    cache_repo: letfn/cache
     repo: letfn/drone-kaniko
     skip_tls_verify: true
+    tag: b
     username:
       from_secret: docker_username
-    tag: b
 
 ---
 kind: pipeline
@@ -35,14 +35,14 @@ steps:
   image: letfn/drone-kaniko:b
   settings:
     cache: true
+    cache_repo: letfn/cache
     password:
       from_secret: docker_password
-    cache_repo: letfn/cache
     repo: letfn/drone-kaniko
     skip_tls_verify: true
+    tag: c
     username:
       from_secret: docker_username
-    tag: c
 
 ---
 kind: pipeline
@@ -58,14 +58,14 @@ steps:
   image: letfn/drone-kaniko:c
   settings:
     cache: true
+    cache_repo: letfn/cache
     password:
       from_secret: docker_password
-    cache_repo: letfn/cache
     repo: letfn/drone-kaniko
     skip_tls_verify: true
+    tag: latest
     username:
       from_secret: docker_username
-    tag: latest
 
 ---
 kind: pipeline
@@ -81,13 +81,13 @@ steps:
   image: letfn/drone-kaniko:a
   settings:
     cache: true
+    cache_repo: letfn/cache
     password:
       from_secret: docker_password
-    cache_repo: letfn/cache
     repo: letfn/drone-kaniko
     skip_tls_verify: true
+    tag: latest
     username:
       from_secret: docker_username
-    tag: latest
 
 ...
