@@ -36,7 +36,6 @@ steps:
   image: letfn/container
   commands:
   - drone fmt --save
-  - drone fmt --save .drone.yml.build
 
 ---
 kind: pipeline
@@ -52,7 +51,6 @@ steps:
   image: letfn/container
   commands:
   - drone lint
-  - drone lint .drone.yml.build
 
 ---
 kind: pipeline
