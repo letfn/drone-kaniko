@@ -28,7 +28,6 @@ EOF
   set -x
 
   /kaniko/executor \
-    $(if [[ -z "${PLUGIN_ARGS:=}" ]]; then echo --reproducible; fi) \
     --cache=true \
     --context=${PLUGIN_CONTEXT:-${PWD}} \
     --dockerfile=${PLUGIN_DOCKERFILE:-Dockerfile} \
