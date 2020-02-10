@@ -1,7 +1,7 @@
 ---
 kind: pipeline
 type: docker
-name: build-a
+name: build
 
 platform:
   os: linux
@@ -19,7 +19,7 @@ steps:
     skip_tls_verify: true
     username:
       from_secret: docker_username
-    tag: a
+    tag: latest
 
 ---
 kind: pipeline
