@@ -2,6 +2,7 @@ FROM amd64/busybox:musl as busybox
 
 FROM letfn/container as letfn
 
+RUN echo 4
 RUN curl -sSL -o /usr/local/bin/kaniko https://github.com/recur/kaniko/releases/download/v-develop/executor-linux-amd64-v-develop && chmod 755 /usr/local/bin/kaniko
 
 FROM gcr.io/kaniko-project/executor:debug-v0.17.1
