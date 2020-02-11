@@ -13,7 +13,7 @@ steps:
   settings:
     args: --destination=letfn/drone-kaniko
     cache: true
-    cache_repo: letfn/cache
+    cache_repo: defn/cache
     password:
       from_secret: docker_password
     repo: letfn/drone-kaniko
