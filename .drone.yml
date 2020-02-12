@@ -9,7 +9,7 @@ platform:
 
 steps:
 - name: everything
-  image: letfn/drone-kaniko
+  image: letfn/drone-kaniko:a
   settings:
     args: --destination=letfn/drone-kaniko
     cache: true
