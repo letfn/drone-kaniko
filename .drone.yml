@@ -21,6 +21,8 @@ steps:
     tag: latest
     username:
       from_secret: docker_username
+  environment:
+    BENCHMARK_FILE: /drone/src/benchmark/build.json
 
 ---
 kind: pipeline

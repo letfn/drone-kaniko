@@ -1,6 +1,4 @@
-FROM ubuntu:bionic-20200112 AS download
-
-RUN apt-get update && apt-get install -y curl
+FROM letfn/container AS download
 
 RUN curl -sSL -o /usr/local/bin/kaniko https://github.com/recur/kaniko/releases/download/v-develop/executor-linux-amd64-v-develop && chmod 755 /usr/local/bin/kaniko
 
