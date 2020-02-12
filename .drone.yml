@@ -35,9 +35,9 @@ platform:
 
 steps:
 - name: everything
-  image: letfn/container
-  commands:
-  - drone fmt --save
+  image: letfn/drone
+  settings:
+    task: fmt
 
 ---
 kind: pipeline
@@ -50,9 +50,9 @@ platform:
 
 steps:
 - name: everything
-  image: letfn/container
-  commands:
-  - drone lint
+  image: letfn/drone
+  settings:
+    task: lint
 
 ---
 kind: pipeline
