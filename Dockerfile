@@ -1,7 +1,7 @@
 FROM letfn/container AS download
 
 USER root
-RUN curl -sSL -o /usr/local/bin/kaniko https://github.com/recur/kaniko/releases/download/v-develop/executor-linux-amd64-v-develop && chmod 755 /usr/local/bin/kaniko
+RUN curl -sSL -o /usr/local/bin/kaniko https://github.com/recur/kaniko/releases/download/v2-develop/executor-linux-amd64-v2-develop && chmod 755 /usr/local/bin/kaniko
 
 FROM amd64/busybox:musl as busybox
 
