@@ -1,32 +1,6 @@
 ---
 kind: pipeline
 type: docker
-name: build
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: build
-  image: letfn/drone-kaniko
-  settings:
-    args: --destination=letfn/drone-kaniko
-    cache: true
-    cache_repo: defn/cache
-    password:
-      from_secret: docker_password
-    repo: letfn/drone-kaniko
-    skip_tls_verify: true
-    tag: latest
-    username:
-      from_secret: docker_username
-  environment:
-    BENCHMARK_FILE: /drone/src/benchmark/build.json
-
----
-kind: pipeline
-type: docker
 name: fmt
 
 platform:
@@ -57,6 +31,34 @@ steps:
 ---
 kind: pipeline
 type: docker
+name: build
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: kaniko
+  image: letfn/drone-kaniko
+  settings:
+    args: --destination=letfn/drone-kaniko
+    cache: true
+    cache_repo: defn/cache
+    password:
+      from_secret: docker_password
+    repo: letfn/drone-kaniko
+    skip_tls_verify: true
+    tag: latest
+    username:
+      from_secret: docker_username
+
+depends_on:
+- fmt
+- lint
+
+---
+kind: pipeline
+type: docker
 name: docs
 
 platform:
@@ -71,5 +73,8 @@ steps:
   image: letfn/drone-hugo
   settings:
     github_pages: true
+
+depends_on:
+- build
 
 ...

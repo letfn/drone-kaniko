@@ -33,7 +33,12 @@ EOF
     --cache=true \
     --cache-repo=${PLUGIN_CACHE_REPO} ${PLUGIN_ARGS:-}
 
-  echo "done"
+  set +x
+
+  if [[ -f benchmark/build.json ]]; then
+    cat benchmark/build.json | jq -r 'to_entries | map(.value = (.value/1000000/1000 | tostring | split(".")[0] | tonumber))[] | "\(.value) \(.key)"' \
+      | sort -n | while read -r a b; do printf '%5s %s\n' "$a" "$b"; done
+  fi
 }
 
 main "$@"
