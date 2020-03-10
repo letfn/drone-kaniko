@@ -31,7 +31,7 @@ EOF
     --context=${PLUGIN_CONTEXT:-${PWD}} \
     --dockerfile=${PLUGIN_DOCKERFILE:-Dockerfile} \
     --cache-repo=${PLUGIN_CACHE_REPO} \
-    --cache=${PLUGIN_CACHE:-true} ${PLUGIN_ARGS:-} \
+    --cache=${PLUGIN_CACHE:-false} ${PLUGIN_ARGS:-} \
 
   set +x
 
