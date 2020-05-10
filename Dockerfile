@@ -6,8 +6,7 @@ RUN curl -sSL -o jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-l
 
 FROM amd64/busybox:musl as busybox
 
-ARG _KANIKO_VERSION=0.22.0
-FROM gcr.io/kaniko-project/executor:debug-v${_KANIKO_VERSION}
+FROM gcr.io/kaniko-project/executor:debug-v0.22.0
 
 COPY --from=busybox /bin/busybox /bin/sh
 COPY --from=busybox /bin/busybox /bin/busybox
