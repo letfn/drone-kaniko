@@ -30,7 +30,7 @@ EOF
   /kaniko/executor \
     --context=${PLUGIN_CONTEXT:-${PWD}} \
     --dockerfile=${PLUGIN_DOCKERFILE:-Dockerfile} \
-    ${PLUGIN_CACHE_REPO:+--cache-repo ${PLUGIN_CACHE_REPO}} \
+    ${PLUGIN_CACHE_REPO:+--cache-repo=${PLUGIN_CACHE_REPO}} \
     --cache=${PLUGIN_CACHE:-false} ${PLUGIN_ARGS:-} \
 
   set +x
