@@ -16,3 +16,7 @@ ENV BENCHMARK_FILE=/drone/src/benchmark/build.json
 COPY plugin /plugin
 
 ENTRYPOINT [ "/plugin" ]
+
+RUN rm -rf /bin && ln -nfs /busybox /bin
+
+RUN /bin/sh -c 'uname -a'
