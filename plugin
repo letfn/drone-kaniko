@@ -6,6 +6,7 @@ function main {
   set -f
 
   find / -name sh || true
+  find / -name rm || true
 
   registry="${PLUGIN_REGISTRY:-index.docker.io}"
 

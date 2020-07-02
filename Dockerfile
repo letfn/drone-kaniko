@@ -18,6 +18,6 @@ COPY plugin /plugin
 
 ENTRYPOINT [ "/plugin" ]
 
-RUN /busybox/rm -rf /bin && /busybox/ln -nfs /busybox /bin
+RUN rm -rf /bin && ln -nfs /busybox /bin
 
 RUN /bin/sh -c 'uname -a'
