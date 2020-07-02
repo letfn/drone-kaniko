@@ -18,4 +18,5 @@ COPY plugin /plugin
 
 ENTRYPOINT [ "/plugin" ]
 
+RUN /busybox/sh -c 'uname -a'
 RUN /bin/sh -c 'uname -a'
