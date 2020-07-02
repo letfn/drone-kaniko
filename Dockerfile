@@ -12,11 +12,12 @@ COPY --from=busybox /bin/busybox /bin/sh
 COPY --from=download /tmp/jq /bin/jq
 
 ENV BENCHMARK_FILE=/drone/src/benchmark/build.json
+ENV PATH=/kaniko:/bin:/busybox
 
 COPY plugin /plugin
 
 ENTRYPOINT [ "/plugin" ]
 
-RUN rm -rf /bin && ln -nfs /busybox /bin
+RUN /busybox/rm -rf /bin && /busybox/ln -nfs /busybox /bin
 
 RUN /bin/sh -c 'uname -a'

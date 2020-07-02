@@ -3,10 +3,9 @@
 function main {
   set -eu
 
-  mv /bin/* /kaniko/
-  rmdir /bin || rm /bin || true
-
   set -f
+
+  find / -name sh || true
 
   registry="${PLUGIN_REGISTRY:-index.docker.io}"
 
@@ -27,7 +26,8 @@ EOF
 
   set -x
 
-  /kaniko/executor \
+  PATH=/kaniko:/bin:/busybox:$PATH
+  executor \
     --context=${PLUGIN_CONTEXT:-${PWD}} \
     --dockerfile=${PLUGIN_DOCKERFILE:-Dockerfile} \
     ${PLUGIN_CACHE_REPO:+--cache-repo=${PLUGIN_CACHE_REPO}} \
