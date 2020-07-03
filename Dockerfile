@@ -6,6 +6,8 @@ RUN curl -sSL -o jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-l
 
 FROM gcr.io/kaniko-project/executor:debug-v0.24.0
 
+RUN [ "/busybox/sh", "-c", "true" ]
+
 COPY --from=download /tmp/jq /busybox/jq
 
 ENV BENCHMARK_FILE=/drone/src/benchmark/build.json
