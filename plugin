@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/busybox/sh
 
 function main {
   set -eu
