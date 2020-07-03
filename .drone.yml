@@ -39,7 +39,7 @@ platform:
 
 steps:
 - name: kaniko
-  image: letfn/drone-kaniko
+  image: gcr.io/kaniko-project/executor:debug-v0.24.0
   settings:
     args: --destination=letfn/drone-kaniko
     cache_repo: defn/cache
