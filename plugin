@@ -1,12 +1,7 @@
 #!/busybox/sh
 
 function main {
-  set -eu
-
-  set -f
-
-  find / -name sh || true
-  find / -name rm || true
+  set -euf
 
   registry="${PLUGIN_REGISTRY:-index.docker.io}"
 
